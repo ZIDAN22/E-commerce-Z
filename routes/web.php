@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\cartController;
 use App\Http\Controllers\checkoutController;
@@ -9,11 +10,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
 
-
-Route::resource('/product', App\Http\Controllers\ProductController::class);
+Route::resource('/dashboard', App\Http\Controllers\DashboardController::class);     //  TASK SESI 11
+Route::resource('/product', App\Http\Controllers\ProductController::class);     //  TASK SESI 11
 Route::resource('/cart', App\Http\Controllers\cartController::class);
 Route::resource('/checkout', App\Http\Controllers\checkoutController::class);
