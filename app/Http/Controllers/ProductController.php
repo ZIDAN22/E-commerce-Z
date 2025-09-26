@@ -12,8 +12,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view("product.index");
-    }   
+        return response()->json(product::all(), 200);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -28,7 +28,21 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = $request->validate([
+            'nameProd' => 'required',
+            'codeProd' => 'required',
+            'price' => 'required',
+            'stock' => 'required'
+        ]);
+        $p = product::create([
+            'nameProd' => $validator['namProd'],
+            'codeProd' => $validator['codeProd'],
+            'price' => $validator['price'],
+            'stock' => $validator['stock']
+
+        ]);
+
+        return response()->json($p, 201);
     }
 
     /**

@@ -11,6 +11,6 @@ Route::get('/', function () {
 });
 
 Route::resource('/home', App\Http\Controllers\homeController::class);     //  TASK SESI 11
-// Route::resource('/product', App\Http\Controllers\ProductController::class);     //  TASK SESI 11
+Route::resource('/product', App\Http\Controllers\ProductController::class);     //  TASK SESI 11
 Route::resource('/cart', App\Http\Controllers\cartController::class);
 Route::resource('/checkout', App\Http\Controllers\checkoutController::class); 

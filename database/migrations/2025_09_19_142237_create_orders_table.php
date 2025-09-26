@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('qty')->nullable();
-            $table->foreignId('prodId')->constrained('products');      //constrained
-            $table->foreignId('userId')->references('id')->on('users');
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('product_id')->references('id')->on('products');
+            $table->integer('qty')->nullable();      //constrained
+            $table->integer('total')->nullable();      //constrained
             $table->timestamps();
-        });
+        }); 
     }
 
     /**
