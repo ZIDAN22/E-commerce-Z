@@ -15,10 +15,17 @@ class productSeeder extends Seeder
     {
         DB::table('products')->insert(
             [
-                "nameProd" => "MSI katana",
+               [ "nameProd" => "MSI katana",
+                "category_id" => 1,
                 "Desc" => "contoh",
                 "price" => 230000000,
-                "stock" => 6
+                "stock" => 6],
+               [ "nameProd" => "AC",
+                "category_id" => 2,
+                "Desc" => "contoh",
+                "price" => 2300000,
+                "stock" => 6]
+                
             ]);
     }
 }
