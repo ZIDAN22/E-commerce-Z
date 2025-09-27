@@ -11,7 +11,7 @@
     /* Hero Section Custom */
     .hero {
       background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
-        url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1500&q=80');
+        url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_wftatRShUmssiBtCtaoCHtOeq_WBuvzmMg&s');
       background-size: cover;
       background-position: center;
       color: white;

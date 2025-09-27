@@ -9,7 +9,6 @@ use App\Http\Controllers\checkoutController;
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::resource('/home', App\Http\Controllers\homeController::class);     //  TASK SESI 11
 Route::resource('/product', App\Http\Controllers\ProductController::class);     //  TASK SESI 11
 Route::resource('/cart', App\Http\Controllers\cartController::class);
