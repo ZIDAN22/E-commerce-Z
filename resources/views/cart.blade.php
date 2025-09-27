@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.cs')
 @section('title', 'Halaman Keranjang')
 @section('content')
 <div class="container my-5">

@@ -1,15 +1,23 @@
 <?php
 
+
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\homeController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\cartController;
-use App\Http\Controllers\checkoutController;
 
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('/home', App\Http\Controllers\homeController::class);     //  TASK SESI 11
-Route::resource('/product', App\Http\Controllers\ProductController::class);     //  TASK SESI 11
-Route::resource('/cart', App\Http\Controllers\cartController::class);
-Route::resource('/checkout', App\Http\Controllers\checkoutController::class); 
+
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function(){ return view('dashboard'); })->name('dashboard');     //  TASK SESI 11
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('/home', App\Http\Controllers\homeController::class);     //  TASK SESI 11
+    Route::resource('/product', App\Http\Controllers\ProductController::class);     //  TASK SESI 11
+    Route::resource('/cart', App\Http\Controllers\cartController::class);
+    Route::resource('/checkout', App\Http\Controllers\checkoutController::class);
+});
+
+require __DIR__ . '/auth.php';
