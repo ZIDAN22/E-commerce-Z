@@ -1,6 +1,79 @@
 @extends('layouts.cs')
 @section('title', 'Halaman Keranjang')
 @section('content')
+<style>
+    body {
+        background: #181818 !important;
+        color: #e5c97b !important;
+    }
+    
+    .container {
+        background: #232323;
+        border-radius: 16px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+        padding: 32px 24px;
+    }
+    .table {
+        background: transparent;
+        color: #e5c97b;
+    }
+    .table-light th {
+        background: #222 !important;
+        color: #e5c97b !important;
+        border-bottom: 2px solid #e5c97b;
+    }
+    .table td, .table th {
+        border-color: #3a2e13;
+    }
+    .form-control, .form-control:focus {
+        background: #181818;
+        color: #e5c97b;
+        border: 1px solid #e5c97b;
+        box-shadow: none;
+    }
+    .btn-outline-danger {
+        color: #e5c97b;
+        border-color: #e5c97b;
+        background: transparent;
+    }
+    .btn-outline-danger:hover {
+        background: #e5c97b;
+        color: #181818;
+    }
+    .btn-outline-secondary {
+        color: #e5c97b;
+        border-color: #e5c97b;
+        background: transparent;
+    }
+    .btn-outline-secondary:hover {
+        background: #e5c97b;
+        color: #181818;
+    }
+    .btn-primary, .btn-primary:focus {
+        background: #e5c97b;
+        border-color: #e5c97b;
+        color: #181818;
+        font-weight: bold;
+    }
+    .btn-primary:hover {
+        background: #c2a24d;
+        border-color: #c2a24d;
+        color: #181818;
+    }
+    h2, h5, h6 {
+        color: #e5c97b;
+    }
+    .text-primary {
+        color: #e5c97b !important;
+    }
+    .rounded {
+        border: 2px solid #e5c97b;
+        background: #232323;
+    }
+    small.text-muted {
+        color: #bfae6a !important;
+    }
+</style>
 <div class="container my-5">
     <h2 class="mb-4 fw-bold text-center">Keranjang Belanja</h2>
 
