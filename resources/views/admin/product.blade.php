@@ -14,6 +14,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-medium">Products</h3>
+                        <a href="{{ route('product.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tambah Product</a>
                     </div>
                     @if($prod->count() > 0)
                         <div class="overflow-x-auto">
@@ -50,7 +51,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ $product->created_at }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                                 <a href="{{ route('product.edit', $product->id) }}" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded mr-2">Edit</a>
-                                                <form action="{{ route('product.destroy', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure?');">
+                                                <form action="{{ route('product.destroy', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah anda yakin?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="bg-red-500 hover:bg-red-700 text-white px-3 py-1 rounded">Delete</button>

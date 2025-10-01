@@ -23,9 +23,9 @@ class ProductController extends Controller
      */
     public function create(Request $req)
     {
-        $prod = product::all();
-        return view('admin.creatProd', compact('prod'));
-        
+        $categories = category::all();
+        return view('admin.creatProd', compact('categories'));
+
     }
 
     /**
@@ -47,7 +47,7 @@ class ProductController extends Controller
             $imagePath = $request->file('image')->store('products', 'public');
         }
 
-        $p = product::create([
+        product::create([
             'nameProd' => $validator['nameProd'],
             'image' => $imagePath,
             'category_id' => $validator['category_id'],
@@ -88,6 +88,7 @@ class ProductController extends Controller
      */
     public function destroy(product $product)
     {
-        //
+        $product->delete();
+        return Redirect()->route('product.index')->with('success', 'data berhasil di hapus');
     }
 }
