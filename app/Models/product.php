@@ -14,6 +14,8 @@ class product extends Model
         'Desc',
         'price',
         'stock',
+        'creted_at',
+        'updated_at',
     ];
 
     public function category(){

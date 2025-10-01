@@ -1,80 +1,92 @@
 @extends('layouts.cs')
 @section('title', 'Halaman Keranjang')
 @section('content')
+
 <style>
     body {
-        background: #181818 !important;
-        color: #e5c97b !important;
+        background: linear-gradient(135deg, #181818 0%, #2c2c2c 100%);
+        color: #f5e9c8;
     }
-    
-    .container {
+
+    .cart-container {
         background: #232323;
-        border-radius: 16px;
-        box-shadow: 0 2px 16px rgba(0,0,0,0.12);
-        padding: 32px 24px;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+        padding: 2.5rem 2rem;
     }
+
     .table {
         background: transparent;
-        color: #e5c97b;
+        color: #f5e9c8;
     }
+
     .table-light th {
-        background: #222 !important;
-        color: #e5c97b !important;
-        border-bottom: 2px solid #e5c97b;
+        background: #1a1a1a;
+        color: #ffd700;
+        border: none;
     }
-    .table td, .table th {
-        border-color: #3a2e13;
+
+    .table td,
+    .table th {
+        border-color: #333;
     }
-    .form-control, .form-control:focus {
+
+    .form-control,
+    .form-control:focus {
         background: #181818;
-        color: #e5c97b;
-        border: 1px solid #e5c97b;
+        color: #ffd700;
+        border: 1.5px solid #ffd700;
+        border-radius: 8px;
         box-shadow: none;
     }
+
     .btn-outline-danger {
-        color: #e5c97b;
-        border-color: #e5c97b;
+        border-color: #ffd700;
+        color: #ffd700;
         background: transparent;
+        transition: background 0.2s, color 0.2s;
     }
+
     .btn-outline-danger:hover {
-        background: #e5c97b;
+        background: #ffd700;
         color: #181818;
     }
-    .btn-outline-secondary {
-        color: #e5c97b;
-        border-color: #e5c97b;
-        background: transparent;
-    }
-    .btn-outline-secondary:hover {
-        background: #e5c97b;
-        color: #181818;
-    }
-    .btn-primary, .btn-primary:focus {
-        background: #e5c97b;
-        border-color: #e5c97b;
+
+    .btn-primary {
+        background: linear-gradient(90deg, #ffd700 60%, #bfa14a 100%);
+        border: none;
         color: #181818;
         font-weight: bold;
     }
+
     .btn-primary:hover {
-        background: #c2a24d;
-        border-color: #c2a24d;
+        background: #ffd700;
+        color: #232323;
+    }
+
+    .btn-outline-secondary {
+        border-color: #ffd700;
+        color: #ffd700;
+        background: transparent;
+    }
+
+    .btn-outline-secondary:hover {
+        background: #ffd700;
         color: #181818;
     }
-    h2, h5, h6 {
-        color: #e5c97b;
+
+    h2,
+    h5,
+    h6 {
+        color: #ffd700;
     }
+
     .text-primary {
-        color: #e5c97b !important;
-    }
-    .rounded {
-        border: 2px solid #e5c97b;
-        background: #232323;
-    }
-    small.text-muted {
-        color: #bfae6a !important;
+        color: #ffd700 !important;
     }
 </style>
-<div class="container my-5">
+
+<div class="container my-5 cart-container">
     <h2 class="mb-4 fw-bold text-center">Keranjang Belanja</h2>
 
     <!-- Tabel Keranjang -->
@@ -94,7 +106,8 @@
                 <tr>
                     <td>
                         <div class="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/80" class="me-3 rounded" alt="Produk 1">
+                            <img src="https://via.placeholder.com/80" class="me-3 rounded" alt="Produk 1"
+                                style="border:2px solid #ffd700;">
                             <div>
                                 <h6 class="mb-0">Sneakers Casual</h6>
                                 <small class="text-muted">Ukuran: 42</small>
@@ -114,7 +127,8 @@
                 <tr>
                     <td>
                         <div class="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/80" class="me-3 rounded" alt="Produk 2">
+                            <img src="https://via.placeholder.com/80" class="me-3 rounded" alt="Produk 2"
+                                style="border:2px solid #ffd700;">
                             <div>
                                 <h6 class="mb-0">Headphone Wireless</h6>
                                 <small class="text-muted">Warna: Hitam</small>

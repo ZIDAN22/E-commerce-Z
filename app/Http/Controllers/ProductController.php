@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category;
 use App\Models\product;
 use Illuminate\Http\Request;
 
@@ -12,15 +13,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-        
+        $prod = product::all();
+        $categories = category::all();
+        return view('admin.product', compact('prod', 'categories'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $req)
     {
-        //
+        $prod = product::all();
+        return view('admin.creatProd', compact('prod'));
+        
     }
 
     /**
@@ -29,20 +34,29 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = $request->validate([
-            'nameProd' => 'required',
-            'codeProd' => 'required',
-            'price' => 'required',
-            'stock' => 'required'
+            'nameProd' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category_id' => 'required|exists:categories,id',
+            'Desc' => 'nullable|string',
+            'price' => 'required|integer|min:0',
+            'stock' => 'required|integer|min:0'
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
+
         $p = product::create([
-            'nameProd' => $validator['namProd'],
-            'codeProd' => $validator['codeProd'],
+            'nameProd' => $validator['nameProd'],
+            'image' => $imagePath,
+            'category_id' => $validator['category_id'],
+            'Desc' => $validator['Desc'],
             'price' => $validator['price'],
             'stock' => $validator['stock']
-
         ]);
 
-        return response()->json($p, 201);
+        return redirect()->route('product.index')->with('success', 'Product created successfully.');
     }
 
     /**
