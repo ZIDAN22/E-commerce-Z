@@ -2,93 +2,98 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\category;
-use App\Models\product;
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $prod = product::all();
-        $categories = category::all();
-        return view('admin.product', compact('prod', 'categories'));
+        $prod = Product::with('category')->latest()->paginate(10);
+
+        return view('admin.product', compact('prod'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $req)
+    public function create()
     {
-        $categories = category::all();
-        return view('admin.creatProd', compact('categories'));
+        $categories = Category::orderBy('name')->get();
 
+        return view('admin.product-form', compact('categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $validator = $request->validate([
-            'nameProd' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'category_id' => 'required|exists:categories,id',
-            'Desc' => 'nullable|string',
-            'price' => 'required|integer|min:0',
-            'stock' => 'required|integer|min:0'
+        $validated = $request->validate([
+            'nameProd' => ['required', 'string', 'max:255'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'Desc' => ['nullable', 'string'],
+            'price' => ['required', 'integer', 'min:0'],
+            'stock' => ['required', 'integer', 'min:0'],
         ]);
 
-        $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
+            $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
-        product::create([
-            'nameProd' => $validator['nameProd'],
-            'image' => $imagePath,
-            'category_id' => $validator['category_id'],
-            'Desc' => $validator['Desc'],
-            'price' => $validator['price'],
-            'stock' => $validator['stock']
+        Product::create($validated);
+
+        return redirect()->route('product.index')->with('success', 'Produk berhasil ditambahkan.');
+    }
+
+    public function edit(string $id)
+    {
+        $product = Product::findOrFail($id);
+        $categories = Category::orderBy('name')->get();
+
+        return view('admin.product-form', compact('product', 'categories'));
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $product = Product::findOrFail($id);
+        $validated = $request->validate([
+            'nameProd' => ['required', 'string', 'max:255'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'Desc' => ['nullable', 'string'],
+            'price' => ['required', 'integer', 'min:0'],
+            'stock' => ['required', 'integer', 'min:0'],
         ]);
 
-        return redirect()->route('product.index')->with('success', 'Product created successfully.');
+        $oldImage = $product->image;
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('products', 'public');
+        }
+
+        $product->update($validated);
+
+        if ($request->hasFile('image') && $oldImage) {
+            Storage::disk('public')->delete($oldImage);
+        }
+
+        return redirect()->route('product.index')->with('success', 'Produk berhasil diperbarui.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(product $product)
+    public function destroy(string $id)
     {
-        //
-    }
+        $product = Product::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(product $product)
-    {
-        //
-    }
+        if (Order::where('product_id', $product->id)->exists()) {
+            return redirect()->route('product.index')
+                ->withErrors(['product' => 'Produk tidak dapat dihapus karena sudah tercatat dalam pesanan.']);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, product $product)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(product $product)
-    {
+        $image = $product->image;
         $product->delete();
-        return Redirect()->route('product.index')->with('success', 'data berhasil di hapus');
+
+        if ($image) {
+            Storage::disk('public')->delete($image);
+        }
+
+        return redirect()->route('product.index')->with('success', 'Produk berhasil dihapus.');
     }
 }

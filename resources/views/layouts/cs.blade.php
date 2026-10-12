@@ -38,6 +38,26 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
+        .cart-container {
+            background: #232323;
+            border: 1px solid #bfa14a;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+            color: #f5e9c8;
+            padding: 2rem;
+        }
+
+        .cart-container h1,
+        .cart-container h2 {
+            color: #ffd700;
+        }
+
+        .cart-container .table {
+            --bs-table-color: #f5e9c8;
+            --bs-table-bg: transparent;
+            --bs-table-border-color: #444;
+        }
+
         /* Footer */
         footer {
             background: #111;

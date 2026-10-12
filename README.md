@@ -1,131 +1,45 @@
 # E-commerce-Z
 
-E-commerce-Z is a web-based e-commerce application built with Laravel, designed to provide a seamless shopping experience. It includes features for user authentication, product management, category organization, shopping cart, and checkout functionality.
-
-## Features
-
-- **User Authentication**: Secure login and registration system using Laravel Breeze.
-- **Product Management**: Admin panel to create, view, edit, and delete products.
-- **Category Management**: Organize products into categories.
-- **Shopping Cart**: Add products to cart, update quantities, and proceed to checkout.
-- **Order Management**: Place orders and manage order history.
-- **Responsive Design**: Built with Tailwind CSS for a modern, responsive UI.
-- **File Uploads**: Support for product image uploads.
+A Laravel 12 storefront with product and category management, a session-based shopping cart, and checkout that records orders and updates product stock.
 
 ## Requirements
 
-- PHP 8.1 or higher
+- PHP 8.2 or later with the Laravel-required extensions
 - Composer
 - Node.js and npm
-- MySQL or another supported database
+- MySQL (the example environment uses a database named `commercez`)
 
-## Installation
+## Setup on Windows
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-username/e-commerce-z.git
-   cd e-commerce-z
-   ```
+Run these commands from the project folder in PowerShell:
 
-2. **Install PHP dependencies**:
-   ```bash
-   composer install
-   ```
+```powershell
+composer install
+npm install
+Copy-Item .env.example .env
+```
 
-3. **Install Node.js dependencies**:
-   ```bash
-   npm install
-   ```
+Create the MySQL database named `commercez`, then update `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` in `.env` if your local MySQL settings differ. Initialize the application and database:
 
-4. **Copy the environment file and configure**:
-   ```bash
-   cp .env.example .env
-   ```
-   Update the `.env` file with your database credentials and other settings.
+```powershell
+php artisan key:generate
+php artisan migrate --seed
+php artisan storage:link
+npm run build
+```
 
-5. **Generate application key**:
-   ```bash
-   php artisan key:generate
-   ```
+Start the development server:
 
-6. **Run database migrations and seeders**:
-   ```bash
-   php artisan migrate
-   php artisan db:seed
-   ```
+```powershell
+php artisan serve
+```
 
-7. **Build assets**:
-   ```bash
-   npm run build
-   ```
+Open `http://127.0.0.1:8000`.
 
-8. **Start the development server**:
-   ```bash
-   php artisan serve
-   ```
+## Features
 
-9. **Access the application**:
-   Open your browser and go to `http://localhost:8000`.
-
-## Usage
-
-### Admin Panel
-
-- Access the admin dashboard at `/dashboard` after logging in.
-- Manage categories at `/category`.
-- Manage products at `/product`.
-
-### Shopping
-
-- Browse products on the home page.
-- Add products to cart.
-- Proceed to checkout at `/checkout`.
-
-## Database Schema
-
-### Categories Table
-- `id`: Primary key
-- `name`: Category name
-- `created_at`, `updated_at`: Timestamps
-
-### Products Table
-- `id`: Primary key
-- `nameProd`: Product name
-- `image`: Product image path
-- `category_id`: Foreign key to categories
-- `Desc`: Product description
-- `price`: Product price
-- `stock`: Available stock
-- `created_at`, `updated_at`: Timestamps
-
-### Orders Table
-- `id`: Primary key
-- `user_id`: Foreign key to users
-- `total`: Order total
-- `status`: Order status
-- `created_at`, `updated_at`: Timestamps
-
-## API Endpoints
-
-The application uses Laravel's resource routes for CRUD operations:
-
-- Categories: `/category`
-- Products: `/product`
-- Cart: `/cart`
-- Checkout: `/checkout`
-
-## Contributing
-
-1. Fork the repository.
-2. Create a new branch for your feature.
-3. Commit your changes.
-4. Push to the branch.
-5. Open a Pull Request.
-
-## License
-
-This project is licensed under the MIT License.
-
-## Support
-
-For support, email support@ecommercez.com or open an issue on GitHub.
+- Browse products from the public home page and add available stock to a session cart.
+- Change quantities or remove products from the cart.
+- Sign in to review and submit a checkout. Orders are saved per product, stock is checked again during checkout, and successful orders reduce stock.
+- Authenticated, verified users can create, edit, and delete products and categories. A category with products and a product with existing orders cannot be deleted.
+- Upload product images; uploaded files are served from Laravel's public storage disk.

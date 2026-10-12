@@ -85,22 +85,50 @@
 <!-- Produk Section -->
 <div class="container my-5" id="produk">
     <h2 class="mb-4 text-center fw-bold">Produk Populer</h2>
+    @if (session('success'))
+        <div class="alert alert-success" role="alert">{{ session('success') }}</div>
+    @endif
+    @if ($errors->any())
+        <div class="alert alert-danger" role="alert">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="row g-4">
-        <!-- Produk 1 -->
         @foreach ($prod as $p)
         <div class="col-md-3 col-sm-6">
             <div class="card product-card h-100">
-                <img src="{{$p->image}}" class="card-img-top" alt="Produk 1">
+                @if ($p->image)
+                    <img src="{{ asset('storage/' . $p->image) }}" class="card-img-top" alt="{{ $p->nameProd }}" style="height: 220px; object-fit: cover;">
+                @else
+                    <div class="d-flex align-items-center justify-content-center bg-secondary text-white" style="height: 220px;">Tidak ada gambar</div>
+                @endif
                 <div class="card-body text-center">
-                    <h6 class="card-title">{{$p->nameProd}}</h6>
-                    <p class="fw-bold text-primary">Rp. {{number_format($p->price,0,',','.')}}</p>
-                    <a href="#" class="btn btn-outline-primary btn-sm w-100">Tambah ke Keranjang</a>
+                    <h6 class="card-title">{{ $p->nameProd }}</h6>
+                    <p class="small">{{ $p->category->name }}</p>
+                    <p class="fw-bold text-primary">Rp. {{ number_format($p->price, 0, ',', '.') }}</p>
+                    <p class="small">Stok: {{ $p->stock }}</p>
+                    @if ($p->stock > 0)
+                        <form action="{{ route('cart.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $p->id }}">
+                            <button type="submit" class="btn btn-outline-primary btn-sm w-100">Tambah ke Keranjang</button>
+                        </form>
+                    @else
+                        <button class="btn btn-secondary btn-sm w-100" disabled>Stok Habis</button>
+                    @endif
                 </div>
             </div>
         </div>
         @endforeach
+        @if ($prod->isEmpty())
+            <div class="col-12 text-center">Belum ada produk yang tersedia.</div>
+        @endif
         <div class="col-md-12">
-            {{$prod->links()}}
+            {{ $prod->links() }}
         </div>
 
         <!-- Promo Banner -->
@@ -108,7 +136,9 @@
             <div class="p-5 text-center bg-primary text-white rounded-3">
                 <h2>Diskon Spesial Akhir Pekan!</h2>
                 <p>Nikmati potongan harga hingga 50% untuk produk pilihan.</p>
-                <a href="#" class="btn btn-light">Lihat Promo</a>
+                <a href="#produk" class="btn btn-light">Lihat Produk</a>
             </div>
         </div>
-        @endsection
+    </div>
+</div>
+@endsection

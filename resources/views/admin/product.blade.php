@@ -2,6 +2,13 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if ($errors->any())
+                <div class="mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700" role="alert">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
             <!-- Success Message -->
             @if (session('success'))
                 <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
@@ -65,6 +72,7 @@
                     @else
                         <p class="text-gray-500 dark:text-gray-400">No products found.</p>
                     @endif
+                    <div class="mt-4">{{ $prod->links() }}</div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg custom-navbar shadow-sm sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold text-gold" href="#">Z.Store</a>
+        <a class="navbar-brand fw-bold text-gold" href="{{ route('home.index') }}">Z.Store</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -13,13 +13,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-1" href="#">
+                    <a class="nav-link d-flex align-items-center gap-1" href="{{ route('home.index') }}#produk">
                         <i class="bi bi-box-seam"></i> Produk
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-1" href="{{ route('cart.index') }}">
-                        <i class="bi bi-cart"></i> Keranjang
+                        <i class="bi bi-cart"></i> Keranjang ({{ array_sum(session('cart', [])) }})
                     </a>
                 </li>
                 @if (Route::has('login'))
